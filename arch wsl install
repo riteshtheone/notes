@@ -1,0 +1,20 @@
+wsl --install
+wsl --set-default-version 2
+wsl --update
+
+wsl --install -d archlinux
+wsl -d archlinux
+passwd
+
+
+useradd -m -G wheel -s /bin/bash yourusername
+passwd yourusername
+echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
+
+wsl --terminate archlinux
+wsl --manage archlinux --set-default-user yourusername
+
+sudo pacman-key --init
+sudo pacman-key --populate archlinux
+sudo pacman -Sy archlinux-keyring
+sudo pacman -Syu
