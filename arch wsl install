@@ -14,7 +14,26 @@ echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
 wsl --terminate archlinux
 wsl --manage archlinux --set-default-user yourusername
 
-sudo pacman-key --init
-sudo pacman-key --populate archlinux
-sudo pacman -Sy archlinux-keyring
-sudo pacman -Syu
+pacman-key --init
+pacman-key --populate archlinux
+pacman -Sy archlinux-keyring
+pacman -Syu
+
+
+wsl --manage archlinux --set-default-user <username>
+
+mkdir -p /etc/sudoers.d
+echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
+chmod 0440 /etc/sudoers.d/wheel
+chmod 750 /etc/sudoers.d
+
+sudo pacman -S --needed base-devel git
+git clone https://aur.archlinux.org/paru-bin.git
+cd paru
+makepkg -si
+
+sudo nano /etc/locale.gen
+en_US.UTF-8 UTF-8
+sudo locale-gen
+sudo nano /etc/locale.conf
+LANG=en_US.UTF-8
